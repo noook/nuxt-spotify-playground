@@ -11,7 +11,7 @@ export function useSpotify(accessToken: AccessToken) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: Buffer.from(`${clientId}:${clientSecret}`).toString('base64'),
+        Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
@@ -30,7 +30,7 @@ export function useSpotify(accessToken: AccessToken) {
 }
 
 export async function getCachedAccessToken() {
-    const { refreshToken } = useRuntimeConfig().spotify
-    const value = await useStorage().getItem<AccessToken>(storageKey)
-    return value ?? { ...emptyAccessToken, refresh_token: refreshToken }
+  const { refreshToken } = useRuntimeConfig().spotify
+  const value = await useStorage().getItem<AccessToken>(storageKey)
+  return value ?? { ...emptyAccessToken, refresh_token: refreshToken }
 }

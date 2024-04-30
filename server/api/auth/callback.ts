@@ -6,7 +6,6 @@ const querySchema = z.object({
 })
 
 export default defineEventHandler(async event => {
-  console.log('HELLO')
   const { code } = await getValidatedQuery(event, querySchema.parse)
   const { spotify, public: { hostname } } = useRuntimeConfig()
   const { clientId, clientSecret, redirectUri } = spotify
