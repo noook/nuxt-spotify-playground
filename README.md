@@ -1,6 +1,4 @@
-# Nuxt 3 Minimal Starter
-
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Nuxt Spotify — Now playing example
 
 ## Setup
 
@@ -9,6 +7,17 @@ Make sure to install the dependencies:
 ```bash
 # pnpm
 pnpm install
+```
+
+## Configuration
+
+Create a `.env` file in the root of the project with the following content:
+
+```bash
+NUXT_SPOTIFY_CLIENT_ID=YOUR_SPOTIFY_CLIENT_ID
+NUXT_SPOTIFY_CLIENT_SECRET=YOUR_SPOTIFY_CLIENT_SECRET
+# Will be filled in the next step
+# NUXT_SPOTIFY_REFRESH_TOKEN=
 ```
 
 ## Development Server
@@ -20,20 +29,20 @@ Start the development server on `http://localhost:3000`:
 pnpm run dev
 ```
 
-## Production
+## Generate Refresh Token
 
-Build the application for production:
+Head to `http://localhost:3000`, open the Nuxt Devtools under the "Server tasks tab", then run the `spotify:auth` command. This will
+output an authorization URL where you need to authorize the app. After that, you will be redirected on the app with an access token object.
 
-```bash
-# pnpm
-pnpm run build
-```
-
-Locally preview production build:
+Copy the `refresh_token` value and paste it in the `.env` file.
 
 ```bash
-# pnpm
-pnpm run preview
+NUXT_SPOTIFY_REFRESH_TOKEN=<refresh_token>
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Using the refresh token
+
+Now that you generated your initial token refresh, you can pass it as a runtime environment variable,
+so you don't have to generate it every time you start the server. This is also how you'll use it in production.
+
+You can test your refresh token by running the server task `spotify:now` in the devtools.
